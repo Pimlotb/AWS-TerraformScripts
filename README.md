@@ -1,5 +1,5 @@
 # AWS-TerraformScripts
-1. My First Script, Create a Simple EC2 Instance - ec2create.tf
+ My First Script, Create a Simple EC2 Instance - ec2create.tf
 Notes:
 -terraform init - initialize workspace
 -terraform Apply - Yes to confirm
