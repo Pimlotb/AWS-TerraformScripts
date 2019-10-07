@@ -1,26 +1,28 @@
-####################################
-#Variables
-####################################
+##################################################################################
+# VARIABLES
+##################################################################################
 
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
 variable "private_key_path" {}
 variable "key_name" {}
 variable "region" {
-    default = "us-east-1"
-}
-###################################
-#Providers
-####################################
-provider "aws" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-  region     = var.region
+  default = "us-east-1"
 }
 
-###################################
-#DATA  -- Pull Data from the Provider
-###################################
+##################################################################################
+# PROVIDERS
+##################################################################################
+
+provider "aws" {
+ access_key = var.aws_access_key
+ secret_key = var.aws_secret_key
+ region     = var.region
+}
+
+##################################################################################
+# DATA
+##################################################################################
 
 data "aws_ami" "aws-linux" {
   most_recent = true
@@ -41,12 +43,15 @@ data "aws_ami" "aws-linux" {
     values = ["hvm"]
   }
 }
-###################################
-#Resources
-###################################
+
+
+##################################################################################
+# RESOURCES
+##################################################################################
 
 #This uses the default VPC.  It WILL NOT delete it on destroy.
 resource "aws_default_vpc" "default" {
+
 }
 
 resource "aws_security_group" "allow_ssh" {
@@ -73,6 +78,7 @@ resource "aws_security_group" "allow_ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
 resource "aws_instance" "nginx" {
   ami                    = data.aws_ami.aws-linux.id
   instance_type          = "t2.micro"
@@ -95,17 +101,10 @@ resource "aws_instance" "nginx" {
   }
 }
 
+##################################################################################
+# OUTPUT
+##################################################################################
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+output "aws_instance_public_dns" {
+  value = aws_instance.nginx.public_dns
+}
