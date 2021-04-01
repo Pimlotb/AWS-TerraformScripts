@@ -12,7 +12,7 @@ resource so that Terraform knows what it is managing
 
 -terraform show - inspect current state
 
-- terraform ftm
+- terraform fmt
 
 
 
